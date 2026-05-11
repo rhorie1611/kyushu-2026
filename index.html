@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>九州一周旅行 2026 しおり v1.0</title>
+<title>九州一周旅 2026 しおり v2.0</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -16,44 +16,30 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: var(--bg); color: var(--text); }
-
-/* NAV */
 nav { background: var(--navy); position: sticky; top: 0; z-index: 1000; padding: 0 20px; display: flex; align-items: center; gap: 0; overflow-x: auto; }
 nav a { color: #cde; text-decoration: none; padding: 14px 16px; font-size: 13px; white-space: nowrap; display: block; }
 nav a:hover { background: rgba(255,255,255,.1); color: #fff; }
 nav .logo { color: #fff; font-weight: bold; font-size: 15px; padding: 14px 16px 14px 0; white-space: nowrap; }
-
-/* HERO */
 .hero { background: linear-gradient(135deg, #1a3a5c 0%, #2471A3 60%, #1ABC9C 100%); color: white; padding: 50px 30px 40px; text-align: center; }
 .hero h1 { font-size: 32px; font-weight: bold; margin-bottom: 8px; }
 .hero .sub { font-size: 17px; opacity: .85; margin-bottom: 20px; }
 .hero-chips { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .chip { background: rgba(255,255,255,.18); border-radius: 20px; padding: 6px 16px; font-size: 13px; }
-
-/* SECTION */
 section { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
 .sec-title { font-size: 22px; font-weight: bold; color: var(--navy); border-left: 5px solid var(--navy); padding-left: 14px; margin-bottom: 24px; }
-
-/* OVERVIEW CARDS */
 .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
 .ov-card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08); text-align: center; }
 .ov-card .icon { font-size: 28px; margin-bottom: 8px; }
 .ov-card .val { font-size: 22px; font-weight: bold; color: var(--navy); }
 .ov-card .lbl { font-size: 12px; color: var(--sub); margin-top: 4px; }
-
-/* ROUTE BAR */
 .route-bar { background: var(--card); border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,.08); display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
 .route-city { font-size: 13px; font-weight: bold; white-space: nowrap; }
 .route-arrow { color: #aaa; padding: 0 8px; font-size: 18px; }
 .route-day { font-size: 10px; color: var(--sub); display: block; text-align: center; }
-
-/* MAP SECTION */
 .map-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
 .map-tab { padding: 8px 16px; border-radius: 20px; border: 2px solid #ddd; background: white; cursor: pointer; font-size: 13px; font-weight: bold; transition: all .2s; }
 .map-tab.active { color: white; border-color: transparent; }
 #map-container { border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.12); height: 450px; }
-
-/* DAYS */
 .days-grid { display: flex; flex-direction: column; gap: 32px; }
 .day-card { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 3px 12px rgba(0,0,0,.09); }
 .day-header { padding: 20px 24px; color: white; display: flex; align-items: center; gap: 16px; }
@@ -79,8 +65,6 @@ section { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
 .b-hotel { background: #27ae60; }
 .b-pass { background: #e74c3c; }
 .day-map { height: 100%; min-height: 360px; border-left: 1px solid #eee; }
-
-/* COST */
 .cost-section { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .cost-card { background: var(--card); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
 .cost-card h4 { font-size: 16px; font-weight: bold; margin-bottom: 16px; color: var(--navy); border-bottom: 2px solid var(--bg); padding-bottom: 10px; }
@@ -91,26 +75,22 @@ td { padding: 9px 10px; border-bottom: 1px solid #f0f0f0; }
 .td-sum { font-weight: bold; color: var(--navy); font-size: 15px; border-top: 2px solid var(--navy); }
 .note { font-size: 11px; color: var(--sub); }
 .highlight-red { color: #e74c3c; font-size: 10px; }
-
-/* HOTELS */
+.highlight-tbd { color: #e67e22; font-size: 12px; font-weight: bold; }
 .hotel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
 .hotel-card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08); border-top: 4px solid var(--navy); }
 .hotel-card .h-day { font-size: 11px; font-weight: bold; color: white; display: inline-block; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
 .hotel-card .h-name { font-size: 15px; font-weight: bold; margin-bottom: 6px; }
 .hotel-card .h-info { font-size: 12px; color: var(--sub); line-height: 1.8; }
 .hotel-card .h-price { font-size: 14px; font-weight: bold; margin-top: 10px; color: #27ae60; }
-
-/* INFO BOXES */
 .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .info-box { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
 .info-box h4 { font-size: 14px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 .info-box ul { font-size: 13px; color: var(--sub); line-height: 2; padding-left: 16px; }
 .warn { background: #fff8e1; border-left: 4px solid #f39c12; padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-top: 16px; }
-
-/* FOOTER */
+.mymaps-section { background: #e8f4fd; border-radius: 14px; padding: 24px; margin-top: 24px; border: 2px dashed #2471A3; }
+.mymaps-section h4 { font-size: 16px; font-weight: bold; color: var(--navy); margin-bottom: 12px; }
+.mymaps-placeholder { background: #f0f7ff; border-radius: 10px; padding: 40px 20px; text-align: center; color: var(--sub); font-size: 14px; border: 2px dashed #aac; }
 footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px; font-size: 12px; margin-top: 40px; }
-
-/* RESPONSIVE */
 @media(max-width: 700px) {
   .day-body { grid-template-columns: 1fr; }
   .day-map { height: 250px; border-left: none; border-top: 1px solid #eee; }
@@ -123,7 +103,8 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
 <nav>
   <span class="logo">🚗 九州2026</span>
   <a href="#overview">概要</a>
-  <a href="#map">マップ</a>
+  <a href="#mymaps">マイマップ</a>
+  <a href="#map">ルートマップ</a>
   <a href="#schedule">日程</a>
   <a href="#cost">旅費</a>
   <a href="#hotels">宿泊先</a>
@@ -132,13 +113,13 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
 
 <!-- HERO -->
 <div class="hero">
-  <h1>🌋 九州一周 男旅 2026 🌊</h1>
+  <h1>九州一周旅 男旅 2026</h1>
   <div class="sub">2026年6月29日（月）〜 7月4日（土）　5泊6日</div>
   <div class="hero-chips">
     <span class="chip">👨‍👦‍👦 男5人</span>
     <span class="chip">🚗 NOAH/VOXYで反時計回り</span>
-    <span class="chip">✈️ NRT ⇄ FUK</span>
-    <span class="chip">💰 1人あたり約51,800円</span>
+    <span class="chip">✈️ Jetstar GK503/GK526</span>
+    <span class="chip">💰 1人あたり約52,900円〜</span>
     <span class="chip">🛣️ 高速乗り放題 Day3〜6</span>
   </div>
 </div>
@@ -149,10 +130,10 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
   <div class="overview-grid">
     <div class="ov-card"><div class="icon">📅</div><div class="val">5泊6日</div><div class="lbl">6/29(月)〜7/4(土)</div></div>
     <div class="ov-card"><div class="icon">👨‍👦‍👦</div><div class="val">5名</div><div class="lbl">男子旅</div></div>
-    <div class="ov-card"><div class="icon">💰</div><div class="val">51,800円</div><div class="lbl">1人あたり（交通＋宿泊）</div></div>
-    <div class="ov-card"><div class="icon">🚗</div><div class="val">約1,200km</div><div class="lbl">総走行距離（概算）</div></div>
+    <div class="ov-card"><div class="icon">💰</div><div class="val">52,900円〜</div><div class="lbl">1人あたり（交通＋宿泊）</div></div>
+    <div class="ov-card"><div class="icon">🚗</div><div class="val">約1,300km</div><div class="lbl">総走行距離（概算）</div></div>
     <div class="ov-card"><div class="icon">♨️</div><div class="val">別府</div><div class="lbl">Day5 美松大江亭（朝食付）</div></div>
-    <div class="ov-card"><div class="icon">⛺</div><div class="val">高千穂</div><div class="lbl">Day3 道の駅で車中泊</div></div>
+    <div class="ov-card"><div class="icon">🏨</div><div class="val">宮崎</div><div class="lbl">Day3 市内ビジネスホテル泊</div></div>
   </div>
   <div class="route-bar">
     <span class="route-city" style="color:var(--d1)">✈️ 東京<span class="route-day">6/29</span></span>
@@ -163,7 +144,7 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
     <span class="route-arrow">→</span>
     <span class="route-city" style="color:var(--d2)">🏯 熊本<span class="route-day">Day2泊</span></span>
     <span class="route-arrow">→</span>
-    <span class="route-city" style="color:var(--d3)">⛺ 高千穂<span class="route-day">Day3車中泊</span></span>
+    <span class="route-city" style="color:var(--d3)">🏨 宮崎<span class="route-day">Day3泊</span></span>
     <span class="route-arrow">→</span>
     <span class="route-city" style="color:var(--d4)">🌋 鹿児島<span class="route-day">Day4泊</span></span>
     <span class="route-arrow">→</span>
@@ -175,17 +156,47 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
   </div>
 </section>
 
+<!-- GOOGLE MY MAPS -->
+<section id="mymaps" style="background:#e8f0f9; max-width:100%; padding: 40px 20px;">
+<div style="max-width:1100px; margin:0 auto;">
+  <div class="sec-title">🗺️ Google マイマップ</div>
+  <div class="mymaps-section">
+    <h4>📌 Googleマイマップ（Day別カラー表示）</h4>
+    <p style="font-size:13px;color:var(--sub);margin-bottom:16px;">
+      以下にGoogleマイマップのiframeが入ります。KMLファイルをインポートしてURLを取得したら、src部分を差し替えてください。
+    </p>
+    <!-- ★ Google My Maps埋め込み ★
+         作成手順:
+         1. Google マイマップ（mymaps.google.com）を開く
+         2. 「新しい地図を作成」→「インポート」
+         3. 九州旅行_マイマップ.kml をアップロード
+         4. 地図を公開して「埋め込み」リンクを取得
+         5. 下のiframeのsrcを差し替える
+    -->
+    <div class="mymaps-placeholder">
+      <div style="font-size:40px;margin-bottom:12px;">🗺️</div>
+      <div style="font-weight:bold;font-size:15px;margin-bottom:8px;">ここにGoogleマイマップを埋め込み</div>
+      <div style="font-size:12px;">KMLファイル（九州旅行_マイマップ.kml）をインポートして<br>埋め込みURLを取得したら、このプレースホルダーをiframeに差し替えてください</div>
+      <div style="margin-top:12px;font-size:11px;background:#fff;padding:8px 12px;border-radius:6px;display:inline-block;font-family:monospace;">
+        &lt;iframe src="https://www.google.com/maps/d/embed?mid=YOUR_MAP_ID" width="100%" height="480" style="border:0;"&gt;&lt;/iframe&gt;
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
 <!-- MAP -->
 <section id="map" style="background:#e8edf2; max-width:100%; padding: 40px 20px;">
 <div style="max-width:1100px; margin:0 auto;">
-  <div class="sec-title">🗺️ ルートマップ</div>
+  <div class="sec-title">🗺️ インタラクティブ ルートマップ</div>
+  <p style="font-size:12px;color:var(--sub);margin-bottom:12px;">※ 各スポット間は直線で結んだルート表示です。実際のルートはGoogleマイマップをご参照ください。</p>
   <div class="map-tabs" id="mapTabs">
     <button class="map-tab active" data-day="all" style="background:#1a3a5c;color:white;border-color:#1a3a5c">全体ルート</button>
     <button class="map-tab" data-day="1" style="--c:var(--d1)">Day1 長崎</button>
     <button class="map-tab" data-day="2" style="--c:var(--d2)">Day2 熊本</button>
-    <button class="map-tab" data-day="3" style="--c:var(--d3)">Day3 高千穂</button>
+    <button class="map-tab" data-day="3" style="--c:var(--d3)">Day3 高千穂→宮崎</button>
     <button class="map-tab" data-day="4" style="--c:var(--d4)">Day4 宮崎→鹿児島</button>
-    <button class="map-tab" data-day="5" style="--c:var(--d5)">Day5 別府</button>
+    <button class="map-tab" data-day="5" style="--c:var(--d5)">Day5 桜島→別府</button>
     <button class="map-tab" data-day="6" style="--c:var(--d6)">Day6 帰路</button>
   </div>
   <div id="map-container"></div>
@@ -206,11 +217,12 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
       <h4>🚗 交通費</h4>
       <table>
         <tr><th>費目</th><th>5人合計</th><th>1人あたり</th></tr>
-        <tr><td>✈️ 飛行機（往復）<br><span class="note">NRT 08:15→FUK 10:20 / FUK 20:00→NRT 21:55</span></td><td>71,700円</td><td>14,340円</td></tr>
-        <tr><td>🚗 レンタカー（6日間）<br><span class="note">NOAH/VOXYクラス 仮確定</span></td><td>52,000円</td><td>10,400円</td></tr>
-        <tr><td>⛽ ガソリン代<br><span class="note">概算 約1,200km走行</span></td><td>15,000円</td><td>3,000円</td></tr>
-        <tr><td>🛣️ 高速道路合計<br><span class="note">乗り放題パス（Day3〜6）：10,600円<br>+ Day1 福岡→長崎：2,000円<br>+ Day2 長崎→熊本：2,000円</span></td><td>14,600円</td><td>2,920円</td></tr>
-        <tr class="td-sum"><td>交通費 小計</td><td>153,300円</td><td>30,660円</td></tr>
+        <tr><td>✈️ 飛行機（往復）<br><span class="note">Jetstar GK503 NRT 08:15→FUK 10:20<br>Jetstar GK526 FUK 20:00→NRT 21:55<br>※手荷物は別途有料（Jetstar）</span></td><td>71,700円</td><td>14,340円</td></tr>
+        <tr><td>🚗 レンタカー（6日間）<br><span class="note">NOAH/VOXYクラス 仮確定・ETC付き必須</span></td><td>52,000円</td><td>10,400円</td></tr>
+        <tr><td>⛽ ガソリン代<br><span class="note">概算 約1,300km走行</span></td><td>16,000円</td><td>3,200円</td></tr>
+        <tr><td>🛣️ 高速道路合計<br><span class="note">乗り放題パス（Day3〜6・4日間）：10,600円<br>+ Day1 福岡→長崎（長崎道）：約2,000円<br>+ Day2 長崎→熊本（九州道）：約2,000円<br>⚠️ 乗り放題<strong>対象外</strong>：福岡/北九州都市高速<br>八木山バイパス・川平有料道路<br>ながさき出島道路・指宿スカイライン<br>一ツ葉有料道路</span></td><td>14,600円</td><td>2,920円</td></tr>
+        <tr><td>⛴️ 桜島フェリー（車ごと）<br><span class="note">鹿児島港↔桜島港 往復</span></td><td>3,200円</td><td>640円</td></tr>
+        <tr class="td-sum"><td>交通費 小計</td><td>157,500円</td><td>31,500円</td></tr>
       </table>
     </div>
     <div class="cost-card">
@@ -219,25 +231,25 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
         <tr><th>日程</th><th>5人合計</th><th>1人あたり</th></tr>
         <tr><td>Day1 長崎泊<br><span class="note">ビジネスホテル</span></td><td>20,000円</td><td>4,000円</td></tr>
         <tr><td>Day2 熊本泊<br><span class="note">ビジネスホテル</span></td><td>25,000円</td><td>5,000円</td></tr>
-        <tr><td>Day3 高千穂（車中泊）<br><span class="note">道の駅高千穂 無料</span></td><td class="highlight-red">0円</td><td class="highlight-red">0円</td></tr>
+        <tr><td>Day3 宮崎市内泊<br><span class="note">ビジネスホテル（要予約）</span></td><td class="highlight-tbd">TBD（要確認）</td><td class="highlight-tbd">TBD</td></tr>
         <tr><td>Day4 鹿児島泊<br><span class="note">ビジネスホテル</span></td><td>15,000円</td><td>3,000円</td></tr>
         <tr><td>Day5 別府泊<br><span class="note">シーサイドホテル美松 大江亭（朝食付）</span></td><td>45,662円</td><td>9,132円</td></tr>
-        <tr class="td-sum"><td>宿泊費 小計</td><td>105,662円</td><td>21,132円</td></tr>
+        <tr class="td-sum"><td>宿泊費 小計</td><td>105,662円＋TBD</td><td>21,132円＋TBD</td></tr>
       </table>
     </div>
   </div>
   <div style="background:#1a3a5c;color:white;border-radius:14px;padding:24px;margin-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
     <div>
-      <div style="font-size:13px;opacity:.7;margin-bottom:4px;">交通＋宿泊 総合計</div>
-      <div style="font-size:32px;font-weight:bold;">258,962円</div>
-      <div style="font-size:13px;opacity:.7;margin-top:4px;">※食費・アクティビティ・お土産は別途</div>
+      <div style="font-size:13px;opacity:.7;margin-bottom:4px;">交通＋宿泊 総合計（Day3宿泊費除く）</div>
+      <div style="font-size:32px;font-weight:bold;">263,162円＋TBD</div>
+      <div style="font-size:13px;opacity:.7;margin-top:4px;">※食費・アクティビティ・お土産・手荷物は別途</div>
     </div>
     <div style="text-align:right;">
       <div style="font-size:13px;opacity:.7;margin-bottom:4px;">1人あたり</div>
-      <div style="font-size:40px;font-weight:bold;color:#1abc9c;">51,792円</div>
+      <div style="font-size:40px;font-weight:bold;color:#1abc9c;">52,632円＋TBD</div>
     </div>
   </div>
-  <div class="warn">⚠️ 上記は確定費用と仮費用の混在です。レンタカー（52,000円）は仮額。実際の予約後に更新してください。</div>
+  <div class="warn">⚠️ Day3の宮崎ビジネスホテル料金はTBD。確定後に更新してください。レンタカー（52,000円）も仮額です。</div>
 </section>
 
 <!-- HOTELS -->
@@ -267,17 +279,17 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
       </div>
       <div class="h-price">25,000円（5,000円/人）</div>
     </div>
-    <div class="hotel-card" style="border-top-color:var(--d3);background:#f0faf4;">
+    <div class="hotel-card" style="border-top-color:var(--d3)">
       <span class="h-day" style="background:var(--d3)">Day 3 | 7/1（水）</span>
-      <div class="h-name">⛺ 道の駅 高千穂（車中泊）</div>
+      <div class="h-name">🏨 宮崎市内ビジネスホテル</div>
       <div class="h-info">
-        📍 宮崎県西臼杵郡高千穂町三田井1099-1<br>
-        🚗 駐車場：無料<br>
-        🚻 トイレ：24時間利用可<br>
-        🛒 売店：翌朝から営業<br>
-        ⚠️ 早朝から観光客が来るため早起き推奨
+        📍 宮崎県宮崎市（宮崎駅周辺）<br>
+        🅿️ 駐車場付き or 近隣コインP<br>
+        🕓 チェックイン：〜18:30頃<br>
+        🕗 チェックアウト：〜07:30（都井岬へ早出）<br>
+        ⚠️ 要予約（未確定）
       </div>
-      <div class="h-price" style="color:var(--d3)">0円（車中泊）</div>
+      <div class="h-price" style="color:#e67e22;">TBD（要確認）</div>
     </div>
     <div class="hotel-card" style="border-top-color:var(--d4)">
       <span class="h-day" style="background:var(--d4)">Day 4 | 7/2（木）</span>
@@ -316,10 +328,21 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
       <h4>🛣️ 高速乗り放題パス 注意点</h4>
       <ul>
         <li>使用期間：Day3（7/1）〜Day6（7/4）の4日間</li>
-        <li>ETCカードが<strong>必須</strong>（5人分不要、車載器1台）</li>
-        <li>レンタカー会社でETC付き車両を手配すること</li>
+        <li>ETCカードが<strong>必須</strong>（車載器1台でOK）</li>
+        <li>レンタカー会社でETC付き車両を必ず手配</li>
         <li>通常料金比 約3,500円お得</li>
-        <li>入口・出口のゲートは必ずETCレーンを通行</li>
+        <li><strong>対象外路線</strong>：福岡都市高速・北九州都市高速・八木山バイパス・川平有料道路・ながさき出島道路・指宿スカイライン・一ツ葉有料道路</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <h4>✈️ Jetstar 注意事項</h4>
+      <ul>
+        <li><strong>往路</strong>：GK503 NRT 08:15 → FUK 10:20</li>
+        <li><strong>復路</strong>：GK526 FUK 20:00 → NRT 21:55</li>
+        <li>⚠️ <strong>手荷物は有料</strong>（機内持込7kgまで無料）</li>
+        <li>預け荷物が必要な場合は事前購入が安い</li>
+        <li>復路：遅くとも18:30にはレンタカー返却完了</li>
+        <li>FUK空港で手荷物受取後レンタカーカウンターへ</li>
       </ul>
     </div>
     <div class="info-box">
@@ -334,23 +357,13 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
       </ul>
     </div>
     <div class="info-box">
-      <h4>⛺ 車中泊（Day3 高千穂）準備</h4>
+      <h4>🗺️ Googleマイマップの使い方</h4>
       <ul>
-        <li>就寝用マット or ブランケット（NOAH/VOXYは7人乗り、後部を倒せばフラット）</li>
-        <li>アイマスク・耳栓（他の利用者の音対策）</li>
-        <li>着替えは道の駅のトイレで</li>
-        <li>夏でも山間部は夜間涼しい（高千穂は標高333m）</li>
-        <li>前日の夜に食料・飲料を確保しておく</li>
-      </ul>
-    </div>
-    <div class="info-box">
-      <h4>✈️ フライト情報</h4>
-      <ul>
-        <li><strong>往路</strong>：NRT 08:15 → FUK 10:20</li>
-        <li><strong>復路</strong>：FUK 20:00 → NRT 21:55</li>
-        <li>合計：71,700円 / 5人（14,340円/人）</li>
-        <li>FUK空港で手荷物受取後レンタカーカウンターへ</li>
-        <li>復路は遅くとも18:30にはレンタカー返却完了すること</li>
+        <li>KMLファイル（九州旅行_マイマップ.kml）をインポート</li>
+        <li>Dayごとにレイヤーが自動作成される</li>
+        <li>各レイヤーのon/offで日程別表示が可能</li>
+        <li>スマホでもGoogleマップアプリで確認可</li>
+        <li>共有URLをLINEで送るのがおすすめ</li>
       </ul>
     </div>
     <div class="info-box">
@@ -378,7 +391,7 @@ footer { background: var(--navy); color: #aaa; text-align: center; padding: 24px
 </section>
 
 <footer>
-  九州一周旅行 2026 しおり v1.0 | 作成日：2026年5月11日 | ※記載の料金は概算です。実際の予約金額で更新してください。
+  九州一周旅 2026 しおり v2.0 | 作成日：2026年5月11日 | ※記載の料金は概算です。実際の予約金額で更新してください。
 </footer>
 
 <script>
@@ -387,21 +400,22 @@ const DAY_COLORS = ['','#C0392B','#D35400','#27AE60','#2471A3','#7D3C98','#1ABC9
 
 const DAYS_DATA = [
   {
-    id:1, date:"6/29 (月)", title:"出発・長崎観光", subtitle:"東京 → 福岡 → 長崎",
+    id:1, date:"6/29 (月)", title:"出発・長崎観光", subtitle:"東京(NRT) → 福岡 → 長崎",
     color:DAY_COLORS[1],
-    center:[32.8,130.1], zoom:9,
+    center:[32.76,130.15], zoom:9,
+    kyushuOnly: true,
     spots:[
-      {name:"羽田/成田空港",lat:35.7647,lng:140.3864,icon:"✈️"},
       {name:"福岡空港",lat:33.5858,lng:130.4511,icon:"🛬"},
       {name:"グラバー園",lat:32.7366,lng:129.8710,icon:"🏛️"},
       {name:"眼鏡橋",lat:32.7449,lng:129.8783,icon:"🌉"},
       {name:"長崎市内（宿泊）",lat:32.7503,lng:129.8779,icon:"🏨",isHotel:true},
     ],
+    osrmWaypoints:[[33.5858,130.4511],[32.7503,129.8779]],
     schedule:[
-      {time:"08:15",icon:"✈️",title:"NRT/HND 出発",detail:"福岡行き（ANA/JAL）",type:"transport"},
+      {time:"08:15",icon:"✈️",title:"NRT 出発",detail:"Jetstar GK503 成田発",type:"transport"},
       {time:"10:20",icon:"🛬",title:"FUK 到着",detail:"福岡空港着・手荷物受取",type:"transport"},
-      {time:"10:30",icon:"🚗",title:"レンタカーピックアップ",detail:"NOAH/VOXYクラス（〜11:30）",type:"drive"},
-      {time:"11:30",icon:"🛣️",title:"福岡空港 出発",detail:"長崎道・長崎IC方面　所要：約1時間50分<br>⚠️ 高速料金：<strong>約2,000円</strong>（乗り放題適用外）",type:"drive"},
+      {time:"10:30",icon:"🚗",title:"レンタカーピックアップ",detail:"NOAH/VOXYクラス ETC必須（〜11:30）",type:"drive"},
+      {time:"11:30",icon:"🛣️",title:"福岡空港 出発",detail:"長崎道・長崎IC方面　所要：約1時間50分<br>⚠️ 高速料金：<strong>約2,000円</strong>（乗り放題<strong>適用外</strong>）",type:"drive"},
       {time:"13:30",icon:"🏙️",title:"長崎市内 到着",detail:"昼食（ちゃんぽん・皿うどん）",type:"food"},
       {time:"14:30",icon:"🏛️",title:"グラバー園",detail:"長崎を代表する洋風建築群。別府港の絶景も。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
       {time:"15:30",icon:"🌉",title:"眼鏡橋 / 出島周辺散策",detail:"日本最古の石造アーチ橋。中島川沿いを散策。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
@@ -410,98 +424,97 @@ const DAYS_DATA = [
     ]
   },
   {
-    id:2, date:"6/30 (火)", title:"長崎→阿蘇→熊本", subtitle:"長崎 → 南阿蘇 → 熊本",
+    id:2, date:"6/30 (火)", title:"長崎→阿蘇→熊本", subtitle:"長崎 → 熊本市内",
     color:DAY_COLORS[2],
     center:[32.9,130.5], zoom:8,
     spots:[
       {name:"長崎市内",lat:32.7503,lng:129.8779,icon:"🏙️"},
       {name:"稲佐山展望台",lat:32.7648,lng:129.8528,icon:"🗻"},
-      {name:"白川水源",lat:32.9072,lng:131.1158,icon:"💧"},
-      {name:"草千里ヶ浜",lat:32.8877,lng:131.0858,icon:"🌿"},
-      {name:"大観峰",lat:33.0542,lng:131.1097,icon:"⛰️"},
       {name:"熊本城",lat:32.8062,lng:130.7061,icon:"🏯"},
       {name:"熊本市内（宿泊）",lat:32.8003,lng:130.7079,icon:"🏨",isHotel:true},
     ],
+    osrmWaypoints:[[32.7503,129.8779],[32.8003,130.7079]],
     schedule:[
       {time:"08:30",icon:"🗻",title:"稲佐山展望台（任意）",detail:"長崎の夜景と朝景が有名。日本三大夜景のひとつ。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"09:30",icon:"🛣️",title:"長崎 出発",detail:"長崎道→九州道→阿蘇方面　所要：約2時間10分<br>⚠️ 高速料金：<strong>約2,000円</strong>（乗り放題適用外）",type:"drive"},
-      {time:"12:00",icon:"💧",title:"白川水源",detail:"阿蘇の名水。透明度抜群の湧水。南阿蘇の絶景スポット。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"13:00",icon:"🌿",title:"草千里ヶ浜 / 阿蘇山",detail:"阿蘇の雄大なカルデラ。草原と池の絶景。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"14:00",icon:"⛰️",title:"大観峰",detail:"阿蘇カルデラを一望できる九州屈指の絶景スポット。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"15:30",icon:"🛣️",title:"熊本市内へ",detail:"阿蘇→熊本　所要：約1時間",type:"drive"},
-      {time:"16:30",icon:"🏯",title:"熊本城",detail:"加藤清正が築いた日本三名城のひとつ。復興工事も見どころ。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"17:30",icon:"🛍️",title:"桜の馬場 城彩苑",detail:"熊本のお土産・グルメが揃う観光施設",type:"food"},
+      {time:"09:30",icon:"🛣️",title:"長崎 出発",detail:"長崎道→九州道→熊本方面　所要：約2時間<br>⚠️ 高速料金：<strong>約2,000円</strong>（乗り放題<strong>適用外</strong>）",type:"drive"},
+      {time:"12:00",icon:"🏯",title:"熊本城",detail:"加藤清正が築いた日本三名城のひとつ。復興工事も見どころ。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
+      {time:"13:00",icon:"🍱",title:"熊本市内で昼食",detail:"馬刺し・熊本ラーメン・辛子蓮根など",type:"food"},
+      {time:"14:00",icon:"🛍️",title:"桜の馬場 城彩苑",detail:"熊本のお土産・グルメが揃う観光施設",type:"food"},
       {time:"19:00",icon:"🏨",title:"ホテルチェックイン",detail:"熊本市内ビジネスホテル / 25,000円・5人（5,000円/人）<span class='tl-badge b-hotel'>宿泊</span>",type:"hotel"},
       {time:"20:00",icon:"🐴",title:"熊本の夜！",detail:"馬刺し・熊本ラーメン・辛子蓮根を堪能",type:"food"},
     ]
   },
   {
-    id:3, date:"7/1 (水)", title:"阿蘇→高千穂", subtitle:"熊本 → 鍋ヶ滝 → 高千穂（車中泊）★乗り放題 Day1",
+    id:3, date:"7/1 (水)", title:"阿蘇→高千穂→宮崎", subtitle:"熊本 → 草千里 → 大観峰 → 鍋ヶ滝 → 高千穂峡 → 天岩戸 → 宮崎市内　★乗り放題 Day1",
     color:DAY_COLORS[3],
-    center:[32.9,131.2], zoom:9,
+    center:[32.3,131.1], zoom:8,
     spots:[
       {name:"熊本市内",lat:32.8003,lng:130.7079,icon:"🏙️"},
+      {name:"草千里ヶ浜",lat:32.8877,lng:131.0858,icon:"🌿"},
+      {name:"大観峰",lat:33.0542,lng:131.1097,icon:"⛰️"},
       {name:"鍋ヶ滝",lat:33.1066,lng:131.2026,icon:"💦"},
-      {name:"やまなみハイウェイ",lat:33.1500,lng:131.2500,icon:"🛣️"},
       {name:"高千穂峡",lat:32.7123,lng:131.3033,icon:"🏞️"},
       {name:"天岩戸神社",lat:32.7394,lng:131.3019,icon:"⛩️"},
-      {name:"道の駅高千穂（車中泊）",lat:32.7167,lng:131.3140,icon:"⛺",isHotel:true},
+      {name:"宮崎市内（宿泊）",lat:31.9108,lng:131.4235,icon:"🏨",isHotel:true},
     ],
+    osrmWaypoints:[[32.8003,130.7079],[32.8877,131.0858],[33.0542,131.1097],[33.1066,131.2026],[32.7123,131.3033],[32.7394,131.3019],[31.9108,131.4235]],
     schedule:[
       {time:"09:00",icon:"🛣️",title:"熊本 出発",detail:"★<strong>高速乗り放題スタート！</strong>（〜Day6）<span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
-      {time:"10:30",icon:"💦",title:"鍋ヶ滝",detail:"裏側から滝を見られる「裏見の滝」。緑の苔が幻想的。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"11:30",icon:"🛣️",title:"やまなみハイウェイ ドライブ",detail:"九州屈指の絶景ドライブルート。牧場・草原が続く。",type:"drive"},
-      {time:"13:00",icon:"🏞️",title:"高千穂峡 到着",detail:"昼食（高千穂そば）",type:"food"},
-      {time:"14:00",icon:"🚣",title:"高千穂峡 ボート",detail:"真名井の滝を水面から鑑賞。早めに並ぶこと推奨（混雑あり）。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
+      {time:"10:00",icon:"🌿",title:"草千里ヶ浜 / 阿蘇山",detail:"阿蘇の雄大なカルデラ。草原と池の絶景。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
+      {time:"11:00",icon:"⛰️",title:"大観峰",detail:"阿蘇カルデラを一望できる九州屈指の絶景スポット。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
+      {time:"12:00",icon:"💦",title:"鍋ヶ滝",detail:"裏側から滝を見られる「裏見の滝」。緑の苔が幻想的。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
+      {time:"13:00",icon:"🏞️",title:"高千穂峡 到着",detail:"昼食（高千穂そば）後、ボート乗船<span class='tl-badge b-food'>昼食</span>",type:"food"},
+      {time:"13:30",icon:"🚣",title:"高千穂峡 ボート（〜15:30）",detail:"真名井の滝を水面から鑑賞。早めに並ぶこと推奨（混雑あり）。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
       {time:"15:30",icon:"⛩️",title:"天岩戸神社 西本宮",detail:"天照大神が隠れた岩戸伝説の神社。神職の案内ツアーあり。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"17:00",icon:"🍜",title:"高千穂の夕食",detail:"高千穂そば・地鶏料理。20時頃には閉まる店が多いので早めに。",type:"food"},
-      {time:"20:00",icon:"⛺",title:"道の駅高千穂 車中泊",detail:"宮崎県西臼杵郡高千穂町 / 無料・トイレ24時間<br>山間部のため夜間は涼しい（服装注意）<span class='tl-badge b-hotel'>車中泊</span>",type:"hotel"},
+      {time:"16:30",icon:"🛣️",title:"宮崎市内へ出発",detail:"高千穂→宮崎市内　所要：約1時間40分<span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
+      {time:"18:30",icon:"🏨",title:"宮崎市内 ホテルチェックイン",detail:"宮崎市内ビジネスホテル（要予約・TBD）<span class='tl-badge b-hotel'>宿泊</span>",type:"hotel"},
+      {time:"20:00",icon:"🐔",title:"宮崎の夜！",detail:"チキン南蛮・宮崎地鶏の炭火焼・宮崎牛",type:"food"},
     ]
   },
   {
-    id:4, date:"7/2 (木)", title:"高千穂→宮崎→鹿児島", subtitle:"高千穂 → 宮崎南部 → 鹿児島　★乗り放題 Day2",
+    id:4, date:"7/2 (木)", title:"宮崎→都井岬→鹿児島", subtitle:"宮崎 → 都井岬 → 鹿児島　★乗り放題 Day2",
     color:DAY_COLORS[4],
-    center:[31.9,131.0], zoom:8,
+    center:[31.7,131.0], zoom:8,
     spots:[
-      {name:"道の駅高千穂",lat:32.7167,lng:131.3140,icon:"⛺"},
+      {name:"宮崎市内",lat:31.9108,lng:131.4235,icon:"🏙️"},
       {name:"都井岬",lat:31.3930,lng:131.0674,icon:"🐴"},
-      {name:"堀切峠",lat:31.6957,lng:131.4712,icon:"⛰️"},
-      {name:"宮崎神宮",lat:31.9297,lng:131.4278,icon:"⛩️"},
       {name:"仙巌園",lat:31.6388,lng:130.6010,icon:"🏯"},
       {name:"黒神埋没鳥居",lat:31.6311,lng:130.7300,icon:"⛩️"},
       {name:"鹿児島市内（宿泊）",lat:31.5966,lng:130.5571,icon:"🏨",isHotel:true},
     ],
+    osrmWaypoints:[[31.9108,131.4235],[31.3930,131.0674],[31.5966,130.5571]],
     schedule:[
-      {time:"07:00",icon:"🌅",title:"高千穂 出発（早め）",detail:"都井岬まで遠いので早朝スタート推奨。",type:"drive"},
+      {time:"07:30",icon:"🌅",title:"宮崎 早朝出発",detail:"都井岬まで約2時間。早朝スタート推奨。",type:"drive"},
       {time:"10:00",icon:"🐴",title:"都井岬",detail:"野生の岬馬が生息する岬。太平洋の絶景も。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"12:30",icon:"⛰️",title:"堀切峠（任意）",detail:"日南海岸を見下ろす絶景ポイント。",type:"sight"},
-      {time:"13:30",icon:"⛩️",title:"宮崎神宮",detail:"神武天皇を祀る九州有数の大社。緑豊かで厳か。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"14:30",icon:"🛣️",title:"宮崎IC→高速",detail:"九州道で鹿児島方面へ　所要：約1時間40分<br>通常料金：約2,830円 → <strong>乗り放題：追加なし</strong><span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
-      {time:"16:30",icon:"🏙️",title:"鹿児島市内 到着",detail:"チェックイン後、観光へ",type:"arrive"},
-      {time:"17:00",icon:"🏯",title:"仙巌園（尚古集成館）",detail:"島津家の別邸。桜島を借景とした名勝。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"18:30",icon:"⛩️",title:"黒神埋没鳥居（時間があれば）",detail:"1914年噴火で埋まった鳥居。別府港近く。",type:"sight"},
-      {time:"19:30",icon:"🏨",title:"ホテルチェックイン",detail:"鹿児島市内ビジネスホテル / 15,000円・5人（3,000円/人）<span class='tl-badge b-hotel'>宿泊</span>",type:"hotel"},
-      {time:"20:30",icon:"🐷",title:"鹿児島の夜！",detail:"黒豚しゃぶしゃぶ・さつま揚げ・白熊かき氷",type:"food"},
+      {time:"12:00",icon:"🛣️",title:"鹿児島方面へ出発",detail:"都井岬→鹿児島市内　所要：約2時間30分<span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
+      {time:"14:30",icon:"🏯",title:"仙巌園（尚古集成館）",detail:"島津家の別邸。桜島を借景とした名勝。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
+      {time:"16:00",icon:"⛩️",title:"黒神埋没鳥居",detail:"1914年噴火で埋まった鳥居。桜島にあり。",type:"sight"},
+      {time:"17:30",icon:"🏙️",title:"鹿児島市内 到着",detail:"チェックイン後、鹿児島グルメへ",type:"arrive"},
+      {time:"18:00",icon:"🏨",title:"ホテルチェックイン",detail:"鹿児島市内ビジネスホテル / 15,000円・5人（3,000円/人）<span class='tl-badge b-hotel'>宿泊</span>",type:"hotel"},
+      {time:"19:30",icon:"🐷",title:"鹿児島の夜！",detail:"黒豚しゃぶしゃぶ・さつま揚げ・白熊かき氷",type:"food"},
     ]
   },
   {
-    id:5, date:"7/3 (金)", title:"鹿児島→桜島→別府", subtitle:"鹿児島 → 桜島 → 由布院 → 別府　★乗り放題 Day3",
+    id:5, date:"7/3 (金)", title:"鹿児島→桜島→別府", subtitle:"鹿児島 → 桜島（フェリー） → 由布院 → 別府　★乗り放題 Day3",
     color:DAY_COLORS[5],
     center:[32.0,130.8], zoom:8,
     spots:[
       {name:"鹿児島市内",lat:31.5966,lng:130.5571,icon:"🏙️"},
       {name:"桜島フェリー乗り場",lat:31.6066,lng:130.5588,icon:"⛴️"},
-      {name:"桜島（有村溶岩展望所）",lat:31.6141,lng:130.7013,icon:"🌋"},
+      {name:"黒神埋没鳥居（桜島）",lat:31.6311,lng:130.7300,icon:"⛩️"},
+      {name:"有村溶岩展望所",lat:31.5698,lng:130.7036,icon:"🌋"},
       {name:"由布院温泉",lat:33.2603,lng:131.3696,icon:"♨️"},
       {name:"美松大江亭（宿泊）",lat:33.2762,lng:131.4989,icon:"🏨",isHotel:true},
     ],
+    osrmWaypoints_ferry:[[31.5966,130.5571],[31.6311,130.7300],[31.5966,130.5571]],
+    osrmWaypoints:[[31.5966,130.5571],[33.2603,131.3696],[33.2762,131.4989]],
     schedule:[
-      {time:"08:00",icon:"🌋",title:"鹿児島市 チェックアウト",detail:"翌朝桜島フェリーに乗るため早めに動く",type:"hotel"},
-      {time:"08:30",icon:"⛴️",title:"桜島フェリー 乗船",detail:"鹿児島港→桜島港　約15分・24時間運航<br>車ごと乗船可（乗用車：約1,600円）",type:"transport"},
-      {time:"09:00",icon:"🌋",title:"桜島観光",detail:"有村溶岩展望所・大正溶岩原。九州の象徴！<span class='tl-badge b-sight'>観光</span>",type:"sight"},
+      {time:"08:00",icon:"🌋",title:"鹿児島 チェックアウト",detail:"桜島フェリー乗り場へ移動",type:"hotel"},
+      {time:"08:30",icon:"⛴️",title:"桜島フェリー 乗船",detail:"鹿児島港→桜島港　約15分・24時間運航<br>車ごと乗船可（乗用車往復：約3,200円/5人）",type:"transport"},
+      {time:"09:00",icon:"🌋",title:"桜島観光",detail:"有村溶岩展望所・黒神埋没鳥居。九州の象徴！<span class='tl-badge b-sight'>観光</span>",type:"sight"},
       {time:"11:00",icon:"⛴️",title:"桜島→鹿児島港 帰還",detail:"フェリーで戻り、高速へ",type:"transport"},
-      {time:"11:30",icon:"🛣️",title:"鹿児島IC→高速 出発",detail:"九州道→大分道で別府へ　所要：約3時間<br>通常料金：約7,190円 → <strong>乗り放題：追加なし</strong><span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
-      {time:"13:30",icon:"☕",title:"SA/PA 休憩",detail:"えびのPAや小林IC付近でランチ休憩",type:"food"},
+      {time:"11:30",icon:"🛣️",title:"鹿児島IC→高速 出発",detail:"九州道→大分道で別府へ　所要：約3時間<br>乗り放題：追加なし<span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
+      {time:"13:30",icon:"☕",title:"SA/PA 休憩",detail:"えびのPA や湯布院IC付近でランチ休憩",type:"food"},
       {time:"14:30",icon:"♨️",title:"由布院（任意立ち寄り）",detail:"湯の坪街道散策・入浴。30〜60分程度。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
       {time:"16:30",icon:"🌊",title:"別府 到着",detail:"オーシャンビューが広がる別府湾へ",type:"arrive"},
       {time:"17:00",icon:"🏨",title:"美松大江亭 チェックイン",detail:"シーサイドホテル美松 大江亭 / 45,662円・5人（9,132円/人・朝食付）<span class='tl-badge b-hotel'>宿泊</span>",type:"hotel"},
@@ -510,9 +523,10 @@ const DAYS_DATA = [
     ]
   },
   {
-    id:6, date:"7/4 (土)", title:"地獄めぐり→門司港→帰路", subtitle:"別府 → 門司港 → 福岡空港 → 東京　★乗り放題 Day4（最終）",
+    id:6, date:"7/4 (土)", title:"地獄めぐり→門司港→帰路", subtitle:"別府 → 門司港 → 福岡空港 → 東京(NRT)　★乗り放題 Day4（最終）",
     color:DAY_COLORS[6],
-    center:[33.5,131.0], zoom:9,
+    center:[33.7,131.1], zoom:9,
+    kyushuOnly: true,
     spots:[
       {name:"美松大江亭",lat:33.2762,lng:131.4989,icon:"🏨"},
       {name:"地獄めぐり（鉄輪）",lat:33.3019,lng:131.4964,icon:"😈"},
@@ -520,18 +534,19 @@ const DAYS_DATA = [
       {name:"和布刈神社",lat:33.9494,lng:130.9636,icon:"⛩️"},
       {name:"福岡空港",lat:33.5858,lng:130.4511,icon:"✈️"},
     ],
+    osrmWaypoints:[[33.2762,131.4989],[33.3019,131.4964],[33.9449,130.9678],[33.5858,130.4511]],
     schedule:[
       {time:"07:30",icon:"🍳",title:"朝食（美松大江亭）",detail:"朝食付きプランのため、チェックアウト前に朝食を",type:"food"},
       {time:"08:30",icon:"🏨",title:"チェックアウト",detail:"荷物をまとめ出発準備",type:"hotel"},
       {time:"09:00",icon:"😈",title:"別府 地獄めぐり",detail:"海地獄・血の池地獄・龍巻地獄など7つの地獄を巡る（約2.5時間）<span class='tl-badge b-sight'>観光</span>",type:"sight"},
-      {time:"11:30",icon:"🛣️",title:"別府IC→高速 出発",detail:"東九州道で北九州・門司方面へ　所要：約1時間<br>通常料金：約3,510円 → <strong>乗り放題：追加なし</strong><span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
+      {time:"11:30",icon:"🛣️",title:"別府IC→高速 出発",detail:"東九州道で北九州・門司方面へ　所要：約1時間<br>乗り放題：追加なし<span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
       {time:"12:30",icon:"🚉",title:"門司港レトロ 到着",detail:"昼食（門司港バナナカレーや焼きカレー）<span class='tl-badge b-sight'>観光</span>",type:"food"},
-      {time:"13:30",icon:"⛩️",title:"和布刈神社",detail:"関門海峡を望む荘厳な神社。本州が手に届きそうな場所に。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
+      {time:"13:30",icon:"⛩️",title:"和布刈神社",detail:"関門海峡を望む荘厳な神社。<span class='tl-badge b-sight'>観光</span>",type:"sight"},
       {time:"14:30",icon:"🛣️",title:"福岡空港へ出発",detail:"九州道で福岡方面　所要：約1時間<span class='tl-badge b-pass'>乗り放題</span>",type:"drive"},
       {time:"16:00",icon:"🚗",title:"福岡空港 レンタカー返却",detail:"余裕を持って18:30には完了するように",type:"transport"},
       {time:"16:30",icon:"🛍️",title:"空港で土産・夕食",detail:"博多土産・空港グルメを楽しむ",type:"food"},
-      {time:"20:00",icon:"✈️",title:"FUK 出発",detail:"東京行き（ANA/JAL）",type:"transport"},
-      {time:"21:55",icon:"🏠",title:"NRT/HND 到着",detail:"お疲れ様でした！！",type:"transport"},
+      {time:"20:00",icon:"✈️",title:"FUK 出発",detail:"Jetstar GK526 福岡発 → NRT 21:55着",type:"transport"},
+      {time:"21:55",icon:"🏠",title:"NRT 到着",detail:"お疲れ様でした！！",type:"transport"},
     ]
   }
 ];
@@ -568,114 +583,141 @@ DAYS_DATA.forEach(d => {
   grid.insertAdjacentHTML('beforeend', html);
 });
 
+// ===== ROUTE (直線) =====
+function straightLine(waypoints) {
+  return waypoints.map(([lat,lng]) => [lat,lng]);
+}
+
 // ===== LEAFLET MAPS =====
-const allSpots = DAYS_DATA.flatMap(d => d.spots.map(s=>({...s,dayColor:d.color,dayId:d.id})));
-
-// All full-route coords
-const fullRoute = [
-  [35.7647,140.3864], // 東京
-  [33.5858,130.4511], // 福岡
-  [32.7503,129.8779], // 長崎
-  [32.8003,130.7079], // 熊本
-  [32.7167,131.3140], // 高千穂
-  [31.3930,131.0674], // 都井岬
-  [31.9297,131.4278], // 宮崎
-  [31.5966,130.5571], // 鹿児島
-  [31.6141,130.7013], // 桜島
-  [31.5966,130.5571], // 鹿児島（フェリーで戻る）
-  [33.2603,131.3696], // 由布院
-  [33.2762,131.4989], // 別府
-  [33.3019,131.4964], // 地獄めぐり
-  [33.9449,130.9678], // 門司港
-  [33.5858,130.4511], // 福岡空港
-];
-
 let mainMap = null;
 const dayMapsObj = {};
+const routeCache = {};
+
+// Kyushu bounds
+const KYUSHU_BOUNDS = [[30.5, 128.8], [34.5, 132.5]];
 
 function initMainMap(dayFilter) {
   const container = document.getElementById('map-container');
-  if (mainMap) { mainMap.remove(); mainMap=null; }
-  const m = L.map('map-container', {scrollWheelZoom:false});
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© OpenStreetMap contributors'
+  if (mainMap) { mainMap.remove(); mainMap = null; }
+  const m = L.map('map-container', {scrollWheelZoom: false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors', maxZoom: 17
   }).addTo(m);
   mainMap = m;
 
   if (dayFilter === 'all') {
-    L.polyline(fullRoute,{color:'#1a3a5c',weight:3,opacity:.6,dashArray:'8,6'}).addTo(m);
-    allSpots.forEach(s=>{
-      const mk = L.circleMarker([s.lat,s.lng],{
-        radius:s.isHotel?9:7,
-        fillColor:s.dayColor,
-        color:'white',
-        weight:2,
-        fillOpacity:0.9
-      }).addTo(m);
-      mk.bindPopup(`<b>${s.icon} ${s.name}</b><br><small style="color:${s.dayColor}">Day ${s.dayId}</small>`);
-    });
-    m.fitBounds(L.latLngBounds(allSpots.map(s=>[s.lat,s.lng])).pad(.1));
+    m.fitBounds(KYUSHU_BOUNDS);
+    DAYS_DATA.forEach(d => drawDayOnMap(m, d, true));
   } else {
-    const d = DAYS_DATA[dayFilter-1];
-    const spots = d.spots;
-    const latlngs = spots.map(s=>[s.lat,s.lng]);
-    if(latlngs.length>1) L.polyline(latlngs,{color:d.color,weight:3,opacity:.8}).addTo(m);
-    spots.forEach((s,i)=>{
-      const mk = L.circleMarker([s.lat,s.lng],{
-        radius:s.isHotel?11:9,
-        fillColor:d.color,
-        color:'white',
-        weight:2.5,
-        fillOpacity:0.95
-      }).addTo(m);
-      mk.bindPopup(`<b>${s.icon} ${s.name}</b>`);
-      if(i===0 || s.isHotel) mk.openPopup();
-    });
-    if(latlngs.length) m.fitBounds(L.latLngBounds(latlngs).pad(.2));
+    const d = DAYS_DATA[parseInt(dayFilter)-1];
+    if (d.kyushuOnly) {
+      m.fitBounds(KYUSHU_BOUNDS);
+    } else {
+      const lats = d.spots.map(s=>s.lat), lngs = d.spots.map(s=>s.lng);
+      m.fitBounds([[Math.min(...lats)-0.15, Math.min(...lngs)-0.15],[Math.max(...lats)+0.15, Math.max(...lngs)+0.15]]);
+    }
+    drawDayOnMap(m, d, false);
   }
 }
 
-// Init main map
-window.addEventListener('load', ()=>{
-  initMainMap('all');
+function drawDayOnMap(m, d, isAll) {
+  const color = d.color;
+  // Draw spots
+  d.spots.forEach(s => {
+    const radius = s.isHotel ? 10 : 8;
+    const marker = L.circleMarker([s.lat, s.lng], {
+      radius, color: '#fff', weight: 2,
+      fillColor: color, fillOpacity: s.isHotel ? 1 : 0.85
+    }).addTo(m);
+    marker.bindPopup(`<b>${s.icon} ${s.name}</b><br><small>Day ${d.id}</small>`);
+    if (!isAll) {
+      const icon = L.divIcon({
+        html: `<div style="font-size:${s.isHotel?16:13}px;text-shadow:1px 1px 2px #fff">${s.icon}</div>`,
+        iconSize:[24,24], iconAnchor:[12,12], className:''
+      });
+      L.marker([s.lat, s.lng], {icon}).addTo(m);
+    }
+  });
 
-  // Init per-day mini maps
-  DAYS_DATA.forEach(d=>{
-    const mapEl = document.getElementById(`daymap-${d.id}`);
-    if(!mapEl) return;
-    const dm = L.map(`daymap-${d.id}`,{zoomControl:false,scrollWheelZoom:false,dragging:false,doubleClickZoom:false});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:''}).addTo(dm);
-    dayMapsObj[d.id] = dm;
-    const spots = d.spots;
-    const latlngs = spots.map(s=>[s.lat,s.lng]);
-    if(latlngs.length>1) L.polyline(latlngs,{color:d.color,weight:2.5,opacity:.8}).addTo(dm);
-    spots.forEach(s=>{
-      const mk = L.circleMarker([s.lat,s.lng],{
-        radius:s.isHotel?9:7,
-        fillColor:d.color,color:'white',weight:2,fillOpacity:.95
-      }).addTo(dm);
-      mk.bindTooltip(s.name,{permanent:false,direction:'top'});
+  // Draw route (直線)
+  const key = 'day'+d.id;
+  let route = routeCache[key];
+  if (!route) {
+    const waypoints = d.osrmWaypoints || d.spots.map(s=>[s.lat,s.lng]);
+    route = straightLine(waypoints);
+    routeCache[key] = route;
+  }
+  if (route && route.length > 0) {
+    L.polyline(route, {color, weight: isAll ? 3 : 4, opacity: isAll ? 0.75 : 0.9}).addTo(m);
+  }
+
+  // Day5: draw ferry as dashed line
+  if (d.id === 5) {
+    const ferryLine = [[31.6066,130.5588],[31.6311,130.7300]];
+    L.polyline(ferryLine, {color:'#7D3C98', weight:3, opacity:0.8, dashArray:'6,8'}).addTo(m)
+     .bindPopup('⛴️ 桜島フェリー（車ごと乗船）約15分');
+  }
+}
+
+function initDayMap(d) {
+  if (dayMapsObj[d.id]) return;
+  const mapEl = document.getElementById('daymap-'+d.id);
+  if (!mapEl || mapEl.offsetHeight === 0) return;
+  const m = L.map('daymap-'+d.id, {scrollWheelZoom:false, zoomControl:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OSM', maxZoom:17
+  }).addTo(m);
+  dayMapsObj[d.id] = m;
+
+  if (d.kyushuOnly) {
+    m.fitBounds(KYUSHU_BOUNDS);
+  } else {
+    const lats = d.spots.map(s=>s.lat), lngs = d.spots.map(s=>s.lng);
+    const pad = 0.2;
+    m.fitBounds([[Math.min(...lats)-pad,Math.min(...lngs)-pad],[Math.max(...lats)+pad,Math.max(...lngs)+pad]]);
+  }
+  drawDayOnMap(m, d, false);
+}
+
+// Init main map
+initMainMap('all');
+
+// Map tab click
+document.querySelectorAll('.map-tab').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.map-tab').forEach(b => {
+      b.classList.remove('active');
+      b.style.background = 'white';
+      b.style.color = '';
     });
-    if(latlngs.length) dm.fitBounds(L.latLngBounds(latlngs).pad(.15));
+    this.classList.add('active');
+    const day = this.dataset.day;
+    if (day === 'all') {
+      this.style.background = '#1a3a5c';
+      this.style.color = 'white';
+    } else {
+      const d = DAYS_DATA[parseInt(day)-1];
+      this.style.background = d.color;
+      this.style.color = 'white';
+    }
+    initMainMap(day);
   });
 });
 
-// Map tab switching
-document.querySelectorAll('.map-tab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.map-tab').forEach(b=>{
-      b.style.background='white'; b.style.color='#333'; b.style.borderColor='#ddd';
-    });
-    const day = btn.dataset.day;
-    if(day==='all'){
-      btn.style.background='#1a3a5c'; btn.style.color='white'; btn.style.borderColor='#1a3a5c';
-    } else {
-      const c = DAY_COLORS[parseInt(day)];
-      btn.style.background=c; btn.style.color='white'; btn.style.borderColor=c;
+// Init day mini-maps on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = parseInt(e.target.id.replace('daymap-',''));
+      const d = DAYS_DATA[id-1];
+      if (d) initDayMap(d);
     }
-    btn.classList.add('active');
-    initMainMap(day==='all'?'all':parseInt(day));
   });
+}, {threshold: 0.1});
+
+DAYS_DATA.forEach(d => {
+  const el = document.getElementById('daymap-'+d.id);
+  if (el) observer.observe(el);
 });
 </script>
 </body>
